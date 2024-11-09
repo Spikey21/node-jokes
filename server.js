@@ -18,6 +18,16 @@ const server = http.createServer(
                 jokes = {message: "Jokes not found"}
             }
             res.end(JSON.stringify(jokes))
+        } else 
+        if (req.url === "/api/jokes/random" && req.method === "GET") {
+            let joke = await getRandom()
+            if (joke) {
+                res.writeHead(200, API_CONTENT_TYPE)
+            } else {
+                res.writeHead(404, API_CONTENT_TYPE)
+                joke = {message: "Joke not found"}
+            }
+            res.end(JSON.stringify(joke))
         }
     }
 );
