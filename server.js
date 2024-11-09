@@ -28,6 +28,17 @@ const server = http.createServer(
                 joke = {message: "Joke not found"}
             }
             res.end(JSON.stringify(joke))
+        } else
+        if (req.url.match(/\/api\/jokes\/([0-9]+)/) && req.method === "GET") {
+            const id = req.url.split("/")[3]
+            let joke = await getJoke(id)
+            if (joke) {
+                res.writeHead(200, API_CONTENT_TYPE)
+            } else {
+                res.writeHead(404, API_CONTENT_TYPE)
+                joke = {message: "Joke not found"}
+            }
+            res.end(JSON.stringify(joke))
         }
     }
 );
